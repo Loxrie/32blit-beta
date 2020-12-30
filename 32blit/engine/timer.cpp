@@ -26,8 +26,19 @@ namespace blit {
    * Start the timer.
    */
   void Timer::start() {
+    if (this->state & PAUSED) {
+      // Modify duration based on when timer was paused.
+      printf("blit::Timer::start resuming timer %d - %d.\n", this->duration, this->paused - this->started);
+      this->duration -= this->paused - this->started;
+    } 
     this->started = blit::now();
     this->state = RUNNING;
+  }
+
+  void Timer::pause() {
+    printf("blit::Timer:;pause pausing timer.\n");
+    this->paused = blit::now();
+    this->state = PAUSED;
   }
 
   /**
